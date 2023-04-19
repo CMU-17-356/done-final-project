@@ -104,3 +104,7 @@ body {
 .hide-button {
     display: none;
 }
+
+.react-datepicker-wrapper{display: flex !important; justify-content: center !important; align-items: center !important;}
+
+.react-datepicker__input-container{display: flex !important; justify-content: center !important; align-items: center !important;}

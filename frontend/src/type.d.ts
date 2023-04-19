@@ -2,6 +2,9 @@ interface ITodo {
     _id: string
     name: string
     description: string
+    label?: string
+    priority?: string
+    dueDate?: Date | null
     status: boolean
     createdAt?: string
     updatedAt?: string
