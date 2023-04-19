@@ -5,10 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 
 type Props = TodoProps & {
   saveTodo: (e: React.FormEvent, formData: ITodo | any) => void 
+  clearForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
-  const [formData, setFormData] = useState<ITodo | {}>()
+const EditTodo: React.FC<Props> = ({todo, saveTodo, clearForm}) => {
+  const [id, setId] = useState(todo._id)
   const [name, setName] = useState(todo.name)
   const [description, setDescription] = useState(todo.description)
   const [label, setLabel] = useState(todo.label)
@@ -32,9 +33,9 @@ const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 
     e.preventDefault();
-    
+
     const todo: ITodo = {
-        _id: "",
+        _id: id,
         name: name,
         description: description,
         label: label,
@@ -43,17 +44,14 @@ const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
         status: false,
       }
 
-    console.log("SLDFKJLSDKFJLDSKFJ")
+    console.log("EDITED TODO: ", todo)
 
     saveTodo(e, todo); 
-    setName("");
-    setDescription("");
-    setLabel("");
-    setPriority("");
-    setDueDate(null);
+
+    clearForm(false);
   }
 
-  return ( show && (
+  return (
     <div> 
     <form className='Form' onSubmit={handleSubmit}>
         <div className="form-group mt-3">
@@ -95,19 +93,11 @@ const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
              />
         </div>
         <div className="form-group mt-3" >
-            <button disabled={name == "" || description == "" ? true: false} >Add Todo</button>
-        </div>
-        <div className="form-group mt-3">
-            <button onClick={() => setShow(false)} >Close</button>
+            <button disabled={name == "" || description == "" ? true: false} >Save Todo</button>
         </div>
     </form>
-    </div>) || 
-    <form className='Form'>
-        <div>
-            <button onClick={() => setShow(true)} >Create Todo</button>
-        </div>
-    </form>
+    </div>
   )
 }
 
-export default AddTodo
+export default EditTodo
