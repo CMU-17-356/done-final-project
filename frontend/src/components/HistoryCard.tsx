@@ -6,24 +6,29 @@ import Card from 'react-bootstrap/Card';
 export interface HistoryCardProps {
   _id: string;
   name: string;
-  date: Date;
+  date: string;
   description: string;
   image: string;
 }
 
 
 
-export default function ImgMediaCard() {
+const HistoryCard:FunctionComponent<HistoryCardProps>=(props:HistoryCardProps) => {
   return (
-    <Card style={{ width: '18rem' }}>
-    <Card.Img variant="top" src="holder.js/100px180" />
+    <Card style={{ width: '12rem' }}>
+    <Card.Img variant="top" src="image" />
     <Card.Body>
-      <Card.Title>Task Title</Card.Title>
-      <Card.Text>
-        watered flowers
-      </Card.Text>
+      <Card.Title style={{ color: 'black' }}>{props.name}</Card.Title>
+      <Card.Text style={{ color: 'black' }}>
+        {props.description}
+        </Card.Text >
+        <Card.Text style={{ color: 'black' }}>
+        {props.date}
+      </Card.Text >
       <Button variant="primary">For more details</Button>
     </Card.Body>
   </Card>
   );
 }
+
+export default HistoryCard;
