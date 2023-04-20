@@ -10,6 +10,16 @@ const TodoList: React.FC = () => {
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
 
+  const emptyTodo: ITodo = {
+    _id: "",
+    name: "",
+    description: "",
+    label: "",
+    priority: "",
+    dueDate: null,
+    status: false,
+  }
+
   useEffect(() => {
     fetchTodos()
   }, [])
@@ -26,6 +36,9 @@ const TodoList: React.FC = () => {
         _id: r,
         name: "task 1",
         description: "nice",
+        label: "label",
+        priority: "high",
+        dueDate: new Date(),
         status: false,
       }
     setTodos([todo])
@@ -73,6 +86,25 @@ const TodoList: React.FC = () => {
     //   .catch((err) => console.log(err))
   }
 
+  const handleEditTodo = (e: React.FormEvent, todo: ITodo): void => {
+    console.log("edited todo")
+
+    let updatedArr = [...todos]; // copying the old datas array
+    updatedArr[todos.findIndex(el => el._id === todo._id)] = todo; // replace e.target.value with whatever you want to change it to
+
+    setTodos(updatedArr);
+
+    // updateTodo(todo)
+    // .then(({ status, data }) => {
+    //     if (status !== 200) {
+    //       throw new Error('Error! Todo not updated')
+    //     }
+    //     setTodos(data.todos)
+    //   })
+    //   .catch((err) => console.log(err))
+  }
+
+
   const handleDeleteTodo = (_id: string): void => {
     console.log("deleteed todo")
 
@@ -91,12 +123,15 @@ const TodoList: React.FC = () => {
   return (
     <main className='TodoList'>
       <h1>My Todos</h1>
-      <AddTodo saveTodo={handleSaveTodo} />
+      <AddTodo 
+        todo={emptyTodo}
+        saveTodo={handleSaveTodo} />
       {todos.map((todo: ITodo) => (
         <TodoItem
           key={todo._id}
           updateTodo={handleUpdateTodo}
           deleteTodo={handleDeleteTodo}
+          saveTodo={handleEditTodo}
           todo={todo}
         />
       ))}
