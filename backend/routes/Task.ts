@@ -1,11 +1,11 @@
 import express from "express";
-import { Order } from '../models/index';
+import { Task } from '../models/index';
 
 const router = express.Router();
 
-// GET all orders
+// GET all Tasks
 router.get("/", (req, res) => {
-    Order.find({}, (err: any, result: any) => {
+    Task.find({}, (err: any, result: any) => {
         if (err) {
             res.json(err);
         } else {
@@ -14,9 +14,9 @@ router.get("/", (req, res) => {
     });
 });
 
-// GET a single order
+// GET a single task
 router.get("/:id", (req, res) => {
-    Order.findById(req.params.id, (err: any, result: any) => {
+    Task.findById(req.params.id, (err: any, result: any) => {
         if (err) {
             res.json(err);
         } else {
@@ -25,19 +25,19 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// CREATE a new order
+// CREATE a new Task
 router.post("/", async (req, res) => {
-    const order = req.body;
-    const newOrder = new Order(order);
+    const task = req.body;
+    const newOrder = new Task(task);
     await newOrder.save();
 
     res.json(newOrder);
 });
 
-// UPDATE a order
+// UPDATE a Task
 router.put("/:id", async (req, res) => {
-    const order = req.body;
-    Order.findOneAndUpdate({ _id: req.params.id }, { $set: order }, (err: any, result: any) => {
+    const task = req.body;
+    Task.findOneAndUpdate({ _id: req.params.id }, { $set: task }, (err: any, result: any) => {
         if (err) {
             res.json(err);
         } else {
@@ -46,9 +46,9 @@ router.put("/:id", async (req, res) => {
     });
 });
 
-// DELETE a order
+// DELETE a task
 router.delete("/:id", async (req, res) => {
-    Order.findOneAndDelete({ _id: req.params.id }, (err: any, result: any) => {
+    Task.findOneAndDelete({ _id: req.params.id }, (err: any, result: any) => {
         if (err) {
             res.json(err);
         } else {
@@ -57,4 +57,4 @@ router.delete("/:id", async (req, res) => {
     });
 });
 
-export const OrderRoutes = router
+export const TaskRoutes = router
