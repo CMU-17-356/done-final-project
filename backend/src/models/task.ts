@@ -27,4 +27,4 @@ const TaskSchema = new Schema({
   }
 })
 
-export const Photo = mongoose.model('tasks', TaskSchema)
+export const Task = mongoose.model('tasks', TaskSchema)
