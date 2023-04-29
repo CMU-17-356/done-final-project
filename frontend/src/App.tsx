@@ -4,6 +4,7 @@ import Login from './views/Login'
 import SignUp from './views/SignUp'
 import TodoList from './views/TodoList'
 import ImageUpload from './components/ImageUpload'
+import HistoryView from './views/HistoryView'
 import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import './App.css'
@@ -21,6 +22,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/todo" element={<TodoList />} />
       <Route path="/upload" element={<ImageUpload />} />
+      <Route path="/history" element={<HistoryView />} />
     </Routes>
     </Container>
   );
