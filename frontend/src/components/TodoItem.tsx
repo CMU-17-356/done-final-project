@@ -30,13 +30,12 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo }) => {
         <div className={checkDone}>
           <div className="Card--text">
             <h1 className={checkTodo}>{todo.name}</h1>
-            <span className={checkTodo}>{todo.description}</span>
-            <br></br>
-            <span className={checkTodo}><b>Label:</b> {todo.label}</span>
-            <br></br>
-            <span className={checkTodo}><b>Priority:</b> {todo.priority}</span>
-            <br></br>
-            {todo.dueDate != null && (<span className={checkTodo}><b>Due Date:</b> {format(todo.dueDate, "h:mm a, MMMM do yyyy")}</span>)}
+            <div className="textbox" style={{ flexShrink: 1 }}> {todo.description}</div>
+            {todo.label != "" && (<div className={checkTodo}><b>Label:</b> {todo.label}</div>)}
+            {todo.priority != "" && (<div className={checkTodo}><b>Priority:</b> {todo.priority}</div>)}
+            {todo.dueDate != null && (<div className={checkTodo}><b>Due Date:</b> {format(todo.dueDate, "h:mm a, MMMM do yyyy")}</div>)}
+            {todo.recurring == "Daily" && (<div className={checkTodo}><b>Recurring:</b> {todo.recurring}</div>)}
+            {todo.recurring == "Weekly" && (<div className={checkTodo}><b>Recurring:</b> {todo.recurring} on {todo.day}</div>)}
           </div>
           <div className='Card--button'>
     

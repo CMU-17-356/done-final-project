@@ -8,12 +8,16 @@ import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css"
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <Container className="mb-4">
+    <div>
+      <Navbar />
+    </div>
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/todo" element={<TodoList />} />
       <Route path="/upload" element={<ImageUpload />} />

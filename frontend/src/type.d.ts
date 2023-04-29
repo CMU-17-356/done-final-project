@@ -2,12 +2,13 @@ interface ITodo {
     _id: string
     name: string
     description: string
-    label?: string
+    label: string
     priority?: string
     dueDate?: Date | null
+    recurring?: string
+    day?: string | null
     status: boolean
-    createdAt?: string
-    updatedAt?: string
+    createdAt: Date
     url?: string
   }
   
