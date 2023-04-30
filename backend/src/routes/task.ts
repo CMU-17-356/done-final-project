@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
 });
 
 // UPDATE a Task
-router.put("/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
     const task = req.body;
     Task.findOneAndUpdate({ _id: req.params.id }, { $set: task }, (err: any, result: any) => {
         if (err) {
