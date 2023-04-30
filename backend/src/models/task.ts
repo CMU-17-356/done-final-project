@@ -6,10 +6,10 @@ export interface ITask {
   description: string
   id: number
   photo: string 
-  priority: string
+  priority: string // High, Medium, Low
   label: string
   due_date: Date
-  repeating: string
+  repeating: string // Daily, weekly
   user_id: string
 }
 

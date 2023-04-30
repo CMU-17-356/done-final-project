@@ -27,6 +27,8 @@ app.use(function(req, res, next) {
 // Create appropriate API endpoints
 app.use("/api/donuts", TaskRoutes)
 
-app.listen(port, () => {
+var server = app.listen(port, () => {
     console.log('Server is running on port ' + port + '!');
 });
+
+export default server
