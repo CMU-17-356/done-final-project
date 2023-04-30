@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css"
+import Example from './views/Backend_Example';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/todo" element={<TodoList />} />
       <Route path="/upload" element={<ImageUpload />} />
       <Route path="/history" element={<HistoryView />} />
+      <Route path="/example" element={<Example />} />
     </Routes>
     </Container>
   );

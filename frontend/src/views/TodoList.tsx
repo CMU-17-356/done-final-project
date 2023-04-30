@@ -123,6 +123,7 @@ const TodoList: React.FC = () => {
   return (
     <main className='TodoList'>
       <h1>My Todos</h1>
+      <p></p>
       <AddTodo 
         todo={emptyTodo}
         saveTodo={handleSaveTodo} />

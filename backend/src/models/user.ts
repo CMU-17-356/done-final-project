@@ -7,14 +7,22 @@ export interface IUser {
 }
 
 const UserSchema = new Schema({
-  name: {
+  first_name: {
     type: String,
     required: true
   },
-  email_id: {
+  last_name: {
+    type: String,
+    required: true
+  },
+  username: {
     type: String, // Positive Int
     required: true
-  }
+  },
+  password: {
+    type: String,
+    required: true
+  },
 })
 
 export const User = mongoose.model('users', UserSchema)

@@ -4,8 +4,11 @@ const { Schema } = mongoose
 export interface ITask {
   name: string
   description: string
-  id: number
-  photo_id: number
+  label: string,
+  priority: string,
+  user: string
+  photo: number
+  date: Date
 }
 
 const TaskSchema = new Schema({
@@ -15,14 +18,26 @@ const TaskSchema = new Schema({
   },
   description: {
     type: String,
-    required: false
+    default: 'No Description'
   },
-  id: {
-    type: Number, // Positive Int
+  label: {
+    type: String,
+    default: 'no label'
+  },
+  priority: {
+    type: String,
+    default: 'low'
+  },
+  user: {
+    type: String,
     required: true
-  }, 
-  photo_id: {
-    type: Number, // Positive Int
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  photo: {
+    type: Buffer,
     required: false
   }
 })

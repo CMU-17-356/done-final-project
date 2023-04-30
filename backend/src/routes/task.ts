@@ -5,6 +5,7 @@ const router = express.Router();
 
 // GET all Tasks
 router.get("/", (req, res) => {
+    console.log('get request')
     Task.find({}, (err: any, result: any) => {
         if (err) {
             res.json(err);

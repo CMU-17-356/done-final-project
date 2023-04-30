@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from 'mongoose';
-import { TaskRoutes} from './routes/index';
+import { TaskRoutes} from './src/routes/index';
 // import cors from 'cors';
 
 // Allow the use of environment variables
@@ -25,8 +25,25 @@ app.use(function(req, res, next) {
 });
 
 // Create appropriate API endpoints
-app.use("/api/donuts", TaskRoutes)
+app.use("/api/tasks", TaskRoutes)
 
 app.listen(port, () => {
     console.log('Server is running on port ' + port + '!');
 });
+
+export async function connect() {
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
+}
+
+export async function close() {
+    await mongoose.connection.close();
+}
+
+export async function clearDatabase() {
+    const collections = mongoose.connection.collections;
+
+    for (const key in collections) {
+        const collection = collections[key];
+    await collection.deleteMany({});
+    }
+}
