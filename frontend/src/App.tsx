@@ -5,6 +5,7 @@ import SignUp from './views/SignUp'
 import TodoList from './views/TodoList'
 import ImageUpload from './components/ImageUpload'
 import HistoryView from './views/HistoryView'
+import Example from './views/Backend_Example';
 import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import './App.css'
