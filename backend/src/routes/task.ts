@@ -28,10 +28,10 @@ router.get("/:id", (req, res) => {
 // CREATE a new Task
 router.post("/", async (req, res) => {
     const task = req.body;
-    const newOrder = new Task(task);
-    await newOrder.save();
+    const newTask = new Task(task);
+    await newTask.save();
 
-    res.json(newOrder);
+    res.json(newTask);
 });
 
 // UPDATE a Task

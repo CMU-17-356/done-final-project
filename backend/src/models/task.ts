@@ -5,7 +5,12 @@ export interface ITask {
   name: string
   description: string
   id: number
-  photo_id: number
+  photo: string 
+  priority: string
+  label: string
+  due_date: Date
+  repeating: string
+  user_id: string
 }
 
 const TaskSchema = new Schema({
@@ -21,10 +26,31 @@ const TaskSchema = new Schema({
     type: Number, // Positive Int
     required: true
   }, 
-  photo_id: {
-    type: Number, // Positive Int
+  photo: {
+    type: String,
+    required: true
+  }, 
+  priority: {
+    type: String,
+    required: true
+  },
+  label: {
+    type: String,
     required: false
+  },
+  repeating: {
+    type: String,
+    required: false
+  },
+  due_date: {
+    type: Date,
+    required: true
+  },
+  user_id: {
+    type: String,
+    required: true
   }
 })
+
 
 export const Task = mongoose.model('tasks', TaskSchema)
