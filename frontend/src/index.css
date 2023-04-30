@@ -41,8 +41,16 @@ body {
   border-bottom: 1px solid #333333;
 }
 
+.Card--text {
+    width: 80%;
+}
+
 .Card--text h1 {
     color: #212426;
+}
+
+.Card--button {
+    width: 20%;
 }
 
 .Card--button button {
@@ -68,7 +76,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    background: hsl(244, 12%, 26%);
+    background: #9abcf8;
     margin-bottom: 1rem;
 }
 
@@ -108,3 +116,29 @@ body {
 .react-datepicker-wrapper{display: flex !important; justify-content: center !important; align-items: center !important;}
 
 .react-datepicker__input-container{display: flex !important; justify-content: center !important; align-items: center !important;}
+
+.mt-3 {
+    color: black !important;
+}
+
+.selector {
+    color: black;
+}
+
+.textbox {
+    /* overflow-wrap: normal; */
+    word-wrap: break-word;
+    width: 90%;
+}
+
+.navbar-right {
+    float: right !important;
+}
+
+.navbar-right > li {
+    float: left !important;
+}
+
+.navbar-right > li > a {
+    display: block !important;
+}
