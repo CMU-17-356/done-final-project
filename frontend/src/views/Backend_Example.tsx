@@ -15,8 +15,7 @@ export function Example() {
     const handlePost = () => {
         // Function to handle POST button click
         console.log('POST button clicked');
-        const buf = Buffer.alloc(0)
-        addTask("example", "example task", '', '', 'user', buf)
+        addTask("example", "example task", '', '', 'user', 'weekly', '')
     }
 
     const handleGet = async () => {

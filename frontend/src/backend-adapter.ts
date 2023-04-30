@@ -31,30 +31,32 @@ export async function getTask(id: string) {
     return task
 }
 
-export async function addTask(name: string, description: string, label: string, priority: string, user: string, photo: Buffer) {
+export async function addTask(name: string, description: string, label: string, priority: string, user: string, repeating: string, photo: string) {
     let task = {
         _id: new mongoose.Types.ObjectId().toString(),
-        date: new Date(),
+        due_date: new Date(),
         name: name,
         description: description,
         user: user,
         label: label,
         priority: priority,
+        repeating: repeating,
         photo: photo,
     }
     instance.post("tasks/", task).then((response) => response.data)
 }
 
-export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, photo: Buffer) {
+export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, repeating: string, photo: string) {
     let task = {
         _id: new mongoose.Types.ObjectId().toString(),
-        date: new Date(),
+        due_date: new Date(),
         name: name,
         description: description,
         user: user,
         label: label,
         priority: priority,
         photo: photo,
+        repeating: repeating,
     }
     instance.put("tasks/" + id, task).then((response) => response.data)
 }

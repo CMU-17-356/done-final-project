@@ -7,8 +7,9 @@ export interface ITask {
   label: string,
   priority: string,
   user: string
-  photo: number
-  date: Date
+  photo: String
+  due_date: Date
+  repeating: string
 }
 
 const TaskSchema = new Schema({
@@ -32,13 +33,17 @@ const TaskSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
+  due_date: {
     type: Date,
     required: true,
   },
   photo: {
-    type: Buffer,
+    type: String,
     required: false
+  },
+  repeating: {
+    type: String,
+    required: true
   }
 })
 
