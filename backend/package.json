@@ -1,7 +1,7 @@
 {
-  "name": "dronuts-2023-swac",
-  "description": "Dronuts startup idea for 17-356 Spring 2023",
-  "author": "SWAC Team (Steven, Wei-Chang, Ashwin, Claire)",
+  "name": "server",
+  "description": "Done startup idea for 17-356 Spring 2023",
+  "author": "Team (Sylvia, Devanshi, Ashwin, Claire)",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://backendtest1.fly.dev/",

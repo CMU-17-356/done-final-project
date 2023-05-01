@@ -28,14 +28,14 @@ router.get("/:id", (req, res) => {
 // CREATE a new Task
 router.post("/", async (req, res) => {
     const task = req.body;
-    const newOrder = new Task(task);
-    await newOrder.save();
+    const newTask = new Task(task);
+    await newTask.save();
 
-    res.json(newOrder);
+    res.json(newTask);
 });
 
 // UPDATE a Task
-router.put("/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
     const task = req.body;
     Task.findOneAndUpdate({ _id: req.params.id }, { $set: task }, (err: any, result: any) => {
         if (err) {
