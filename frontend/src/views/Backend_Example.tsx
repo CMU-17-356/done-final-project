@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import { Buffer } from 'buffer';
-import axios from "axios";
 import {getAllTasks, getTask, updateTask, deleteTask, addTask, ITask} from '../backend-adapter'
-
-let instance = axios.create({
-    baseURL: "http://localhost:8080/api/",
-  });
-
-let globalTasks: ITask[]
 
 export function Example() {
     const [globalTasks, setGlobalTasks] = useState<ITask[]>();
@@ -25,7 +17,7 @@ export function Example() {
 
     const handleDelete = async () => {
         if (!(globalTasks === undefined) && globalTasks.length > 0) {
-          let taskToDelete: ITask = globalTasks[0]; // specify ITask type
+          let taskToDelete: ITask = globalTasks[0];
           deleteTask(taskToDelete._id);
         }
         console.log(globalTasks);
