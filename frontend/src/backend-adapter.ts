@@ -31,7 +31,7 @@ export async function getTask(id: string) {
     return task
 }
 
-export async function addTask(name: string, description: string, label: string, priority: string, user: string, repeating: string, photo: string) {
+export async function addTask(name: string, description: string, label: string, priority: string, user: string, repeating: string, open: boolean, photo: string) {
     let task = {
         _id: new mongoose.Types.ObjectId().toString(),
         due_date: new Date(),
@@ -42,11 +42,12 @@ export async function addTask(name: string, description: string, label: string, 
         priority: priority,
         repeating: repeating,
         photo: photo,
+        open: open
     }
     instance.post("tasks/", task).then((response) => response.data)
 }
 
-export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, repeating: string, photo: string) {
+export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, repeating: string, open: boolean, photo: string) {
     let task = {
         _id: new mongoose.Types.ObjectId().toString(),
         due_date: new Date(),
@@ -57,7 +58,12 @@ export async function updateTask(id: string, name: string, description: string, 
         priority: priority,
         photo: photo,
         repeating: repeating,
+        open: open
     }
+    instance.put("tasks/" + id, task).then((response) => response.data)
+}
+
+export async function updateTask2(id: string, task: ITask) {
     instance.put("tasks/" + id, task).then((response) => response.data)
 }
 

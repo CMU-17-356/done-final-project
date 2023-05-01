@@ -10,6 +10,7 @@ export interface ITask {
   photo: String
   due_date: Date
   repeating: string
+  open: boolean
 }
 
 const TaskSchema = new Schema({
@@ -44,6 +45,10 @@ const TaskSchema = new Schema({
   repeating: {
     type: String,
     required: true
+  },
+  open: {
+    type: Boolean,
+    default: true
   }
 })
 

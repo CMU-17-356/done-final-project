@@ -7,7 +7,7 @@ export function Example() {
     const handlePost = () => {
         // Function to handle POST button click
         console.log('POST button clicked');
-        addTask("example", "example task", '', '', 'user', 'weekly', '')
+        addTask("example", "example task", '', '', 'user', 'weekly', true, '')
     }
 
     const handleGet = async () => {
