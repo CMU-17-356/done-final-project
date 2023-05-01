@@ -24,7 +24,7 @@ describe('GET request for task', () => {
         priority: "High",
         label: "chore",
         due_date: new Date(),
-        repeating: "Weekly",
+        recurring: "Weekly",
         user_id: "devanshg"
       }
       const create_response = await request(server).post('/').send(new_task)

@@ -9,14 +9,15 @@ type Props = TodoProps & {
 
 const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
   const [formData, setFormData] = useState<ITodo | {}>()
-  const [name, setName] = useState(todo.name)
-  const [description, setDescription] = useState(todo.description)
-  const [label, setLabel] = useState(todo.label)
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [label, setLabel] = useState("")
   const [priority, setPriority] = useState(todo.priority)
   const [dueDate, setDueDate] = useState(todo.dueDate)
   const [recurring, setRecurring] = useState(todo.recurring)
   const [day, setDay] = useState("Monday")
   const [show, setShow] = useState(false)
+  const user = todo.user
 
   let priorities = [
         { label: "Select a priority", value: "" },
@@ -61,11 +62,10 @@ const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
         dueDate: dueDate,
         recurring: recurring,
         day: day,
-        status: false,
+        completed: [],
         createdAt: new Date(),
+        user: user
       }
-
-    console.log("Added todo:", todo)
 
     saveTodo(e, todo); 
     setName("");
@@ -131,7 +131,7 @@ const AddTodo: React.FC<Props> = ({todo, saveTodo }) => {
         }
 
         <div className="form-group mt-3" >
-            <button disabled={name == "" || description == "" ? true: false} >Add Todo</button>
+            <button disabled={name == "" ? true: false} >Add Todo</button>
         </div>
         <div className="form-group mt-3">
             <button onClick={() => setShow(false)} >Close</button>

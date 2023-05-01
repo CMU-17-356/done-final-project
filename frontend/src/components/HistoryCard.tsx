@@ -2,7 +2,6 @@ import { FunctionComponent } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-
 export interface HistoryCardProps {
   _id: string;
   name: string;
@@ -10,8 +9,6 @@ export interface HistoryCardProps {
   description: string;
   image: string;
 }
-
-
 
 const HistoryCard:FunctionComponent<HistoryCardProps>=(props:HistoryCardProps) => {
   return (

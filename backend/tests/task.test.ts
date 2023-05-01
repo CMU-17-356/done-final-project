@@ -9,17 +9,17 @@ describe('task', () => {
       const task: ITask = {
         name: "laundry",
         description: "wash and dry clothes",
-        id: 1,
         photo: "random_string", 
         priority: "High",
         label: "chore",
-        due_date: new Date(),
-        repeating: "Weekly",
-        user_id: "devanshg"
+        dueDate: new Date(),
+        recurring: "Weekly",
+        user: "devanshg",
+        status: false,
+        createdAt: new Date(),
       }
       const result = new Task(task)
       expect(result.name).toBe(task.name)
       expect(result.description).toBe(task.description)
-      expect(result.id).toBe(task.id)
     })
   })

@@ -2,15 +2,17 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 export interface ITask {
+  _id: string
   name: string
   description: string
-  label: string,
-  priority: string,
+  label: string
+  priority?: string
+  dueDate?: Date | null
+  recurring?: string
+  day?: string | null
+  completed: {date: Date, photo: string}[]
+  createdAt: Date
   user: string
-  photo: String
-  due_date: Date
-  repeating: string
-  open: boolean
 }
 
 const TaskSchema = new Schema({
@@ -20,36 +22,40 @@ const TaskSchema = new Schema({
   },
   description: {
     type: String,
-    default: 'No Description'
+    default: ''
   },
   label: {
     type: String,
-    default: 'no label'
+    default: ''
   },
   priority: {
     type: String,
-    default: 'low'
+    default: 'Low'
   },
   user: {
     type: String,
     required: true
   },
-  due_date: {
+  dueDate: {
     type: Date,
-    required: true,
+    required: false
   },
-  photo: {
+  recurring: {
     type: String,
     required: false
   },
-  repeating: {
+  day: {
     type: String,
-    required: true
+    required: false
   },
-  open: {
-    type: Boolean,
-    default: true
-  }
+  createdAt: {
+    type: Date,
+    required: false
+  },
+  completed: {
+    type: [{date: Date, photo: String}],
+    default: []
+  },
 })
 
 

@@ -7,22 +7,15 @@ interface ITodo {
     dueDate?: Date | null
     recurring?: string
     day?: string | null
-    status: boolean
+    completed: {date: Date, photo: string}[]
     createdAt: Date
-    url?: string
+    user: string
   }
   
   interface TodoProps {
     todo: ITodo
   }
   
-  type ApiDataType = {
-    message: string
-    status: string
-    todos: ITodo[]
-    todo?: ITodo
-  }
-
   interface IFile {
     url: string,
     name: string,

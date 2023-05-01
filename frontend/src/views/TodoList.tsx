@@ -5,14 +5,12 @@ import AddTodo from '../components/AddTodo'
 import { format } from "date-fns";
 import Select from "react-select";
 import Button from 'react-bootstrap/Button';
+import {getAllTasks, getTask, updateTask2, deleteTask, addTask, ITask} from '../backend-adapter'
 
 
-
-const TodoList: React.FC = () => {
+const TodoList = (username) => {
   const [todos, setTodos] = useState<ITodo[]>([])
   const [completedTodos, setCompletedTodos] = useState<ITodo[]>([])
-  const [currentImage, setCurrentImage] = useState<File>();
-  const [previewImage, setPreviewImage] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("")
@@ -81,132 +79,83 @@ const TodoList: React.FC = () => {
     label: "",
     priority: "",
     dueDate: null,
-    status: false,
     createdAt: new Date(),
+    user: username.username,
+    completed: [],
   }
 
   useEffect(() => {
     fetchTodos()
   }, [])
 
-  const fetchTodos = (): void => {
-    // getTodos()
-    // .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
-    // .catch((err: Error) => console.log(err))
-    console.log("fetch todo")
-
-    let r = (Math.random() + 1).toString(36).substring(5);
-
-    const todo: ITodo = {
-        _id: r,
-        name: "task 1",
-        description: "alsdfkjalsdkjflaksdjflaksjdlfkjasdlfkjasldkfjlaskdjflkasdjflkajsdflkjadslfkjasdlfkasldkfjalsdkjfladskjflkasdjflkasdjflkajsdfl",
-        label: "label",
-        priority: "High",
-        dueDate: new Date(),
-        status: false,
-        createdAt: new Date(),
-      }
-    setTodos([todo])
-    setFilterOptions(getFilterOptions([todo]))
-
+  const fetchTodos = () => {
+    getAllTasks(username.username)
+    .then((curr) => {
+      setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+      setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+      setFilterOptions(getFilterOptions(curr));
+    })
   }
 
   const getFilterOptions = (arr: ITodo[]) => {
     return arr.filter((todo) => todo.label !== "").map((todo: ITodo) => ({"label": todo.label, "value": todo.label}))
   }
 
- const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
+ const handleSaveTodo = (e: React.FormEvent, formData: ITodo) => {
     e.preventDefault()
-    formData._id = (Math.random() + 1).toString(36).substring(5);
 
-    console.log("saved todo: ", formData)
-
-    setTodos(oldTodos => [...oldTodos, formData])
-    setFilterOptions(getFilterOptions([...todos, formData]))
-
-    console.log(todos)
-
-//    addTodo(formData)
-//    .then(({ status, data }) => {
-//     if (status !== 201) {
-//       throw new Error('Error! Todo not saved')
-//     }
-//     setTodos(data.todos)
-//   })
-//   .catch((err) => console.log(err))
+    addTask(formData)
+      .then(()=> {
+        getAllTasks(username.username)
+        .then((curr) => {
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setFilterOptions(getFilterOptions(curr));
+        })
+      })
 }
 
-  const handleUpdateTodo = (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo): void => {
-    console.log("updated todo")
+  const handleCompleteTodo = (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo): void => {
 
     const selectedFiles = event.target.files as FileList;
-    setCurrentImage(selectedFiles?.[0]);
-    setPreviewImage(URL.createObjectURL(selectedFiles?.[0]));
-    todo.status = true;
-    todo.url = URL.createObjectURL(selectedFiles?.[0]);
+    let url = URL.createObjectURL(selectedFiles?.[0]);
+    todo.completed.push({date: date, photo: url});
 
-    console.log(todo.url);
-
-    setCompletedTodos(oldTodos => [...oldTodos, todo])
-    setTodos((oldTodos) => oldTodos.filter((oldTodo) => oldTodo._id !== todo._id));
-
-
-    // updateTodo(todo)
-    // .then(({ status, data }) => {
-    //     if (status !== 200) {
-    //       throw new Error('Error! Todo not updated')
-    //     }
-    //     setTodos(data.todos)
-    //   })
-    //   .catch((err) => console.log(err))
+    updateTask2(todo)
+      .then(()=> {
+        getAllTasks(username.username)
+        .then((curr) => {
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setFilterOptions(getFilterOptions(curr));
+        })
+      })
   }
 
   const handleEditTodo = (e: React.FormEvent, todo: ITodo): void => {
-    console.log("edited todo")
+    e.preventDefault()
 
-    let found = todos.findIndex(el => el._id === todo._id)
-
-    if(found != -1){
-      let updatedArr = [...todos]; // copying the old datas array
-      updatedArr[todos.findIndex(el => el._id === todo._id)] = todo; // replace e.target.value with whatever you want to change it to
-      setTodos(updatedArr);
-      setFilterOptions(getFilterOptions([...updatedArr, ...completedTodos]))
-    }
-    else {
-      let updatedArr = [...completedTodos]; // copying the old datas array
-      updatedArr[completedTodos.findIndex(el => el._id === todo._id)] = todo; // replace e.target.value with whatever you want to change it to
-      setCompletedTodos(updatedArr);
-      setFilterOptions(getFilterOptions([...updatedArr, ...todos]))
-    }
-
-
-    // updateTodo(todo)
-    // .then(({ status, data }) => {
-    //     if (status !== 200) {
-    //       throw new Error('Error! Todo not updated')
-    //     }
-    //     setTodos(data.todos)
-    //   })
-    //   .catch((err) => console.log(err))
+    updateTask2(todo)
+      .then(()=> {
+        getAllTasks(username.username)
+        .then((curr) => {
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setFilterOptions(getFilterOptions(curr));
+        })
+      })
   }
 
-
   const handleDeleteTodo = (_id: string): void => {
-    console.log("deleteed todo")
-
-    setTodos((oldTodos) => oldTodos.filter((todo) => todo._id !== _id));
-    setFilterOptions(getFilterOptions(todos.filter((todo) => todo._id !== _id)))
-
-
-    // deleteTodo(_id)
-    // .then(({ status, data }) => {
-    //     if (status !== 200) {
-    //       throw new Error('Error! Todo not deleted')
-    //     }
-    //     setTodos(data.todos)
-    //   })
-    //   .catch((err) => console.log(err))
+    deleteTask(_id)
+      .then(()=> {
+        getAllTasks(username.username)
+        .then((curr) => {
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setFilterOptions(getFilterOptions(curr));
+        })
+      })
   }
 
   const movePrevious = (e): void => {
@@ -215,6 +164,12 @@ const TodoList: React.FC = () => {
       date.setDate(date.getDate() - 1);
       return new Date(date)
     });
+    getAllTasks(username.username)
+      .then((curr) => {
+        setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+        setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+        setFilterOptions(getFilterOptions(curr));
+      })
   }
   const moveNext = (e): void => {
     e.preventDefault()
@@ -222,6 +177,12 @@ const TodoList: React.FC = () => {
       date.setDate(date.getDate() + 1);
       return new Date(date)
     });
+    getAllTasks(username.username)
+      .then((curr) => {
+        setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
+        setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+        setFilterOptions(getFilterOptions(curr));
+      })
   }
 
   return (
@@ -264,26 +225,25 @@ const TodoList: React.FC = () => {
         }).filter((todo) => {
           if(todo.dueDate !== undefined && todo.dueDate !== null){
             if (todo.recurring === "Weekly"){
-              console.log("check filter", todo.dueDate, date, weekday[date.getDay()], todo.day)
-              return todo.dueDate >= date && weekday[date.getDay()] === todo.day;
+              return todo.createdAt <= date && todo.dueDate >= date && weekday[date.getDay()] === todo.day;
             }
-            return todo.dueDate >= date;
+            return todo.createdAt <= date && todo.dueDate >= date;
           } else {
               if (todo.recurring === "Weekly"){
-                console.log("check filter", todo.dueDate, date, weekday[date.getDay()], todo.day)
-                return weekday[date.getDay()] === todo.day;
+                return todo.createdAt <= date && weekday[date.getDay()] === todo.day;
               } else if (todo.recurring === "Daily"){
-                return true;
+                return todo.createdAt <= date;
               }
-              return todo.createdAt.getDate() === date.getDate();
+              return todo.createdAt.toDateString() === date.toDateString();
           }
         }).map((todo: ITodo) => (
         <TodoItem
           key={todo._id}
-          updateTodo={handleUpdateTodo}
+          updateTodo={handleCompleteTodo}
           deleteTodo={handleDeleteTodo}
           saveTodo={handleEditTodo}
           todo={todo}
+          date={date}
         />
       ))}
       <div className='mt-3'>Completed: </div>
@@ -294,13 +254,11 @@ const TodoList: React.FC = () => {
         }).filter((todo) => {
           if(todo.dueDate !== undefined && todo.dueDate !== null){
             if (todo.recurring === "Weekly"){
-              console.log("check filter", todo.dueDate, date, weekday[date.getDay()], todo.day)
               return todo.dueDate >= date && weekday[date.getDay()] === todo.day;
             }
             return todo.dueDate >= date;
           } else {
               if (todo.recurring === "Weekly"){
-                console.log("check filter", todo.dueDate, date, weekday[date.getDay()], todo.day)
                 return weekday[date.getDay()] === todo.day;
               } else if (todo.recurring === "Daily"){
                 return true;
@@ -310,10 +268,11 @@ const TodoList: React.FC = () => {
         }).map((todo: ITodo) => (
         <TodoItem
           key={todo._id}
-          updateTodo={handleUpdateTodo}
+          updateTodo={handleCompleteTodo}
           deleteTodo={handleDeleteTodo}
           saveTodo={handleEditTodo}
           todo={todo}
+          date={date}
         />
       ))}
     </main>
