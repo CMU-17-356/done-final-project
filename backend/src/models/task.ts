@@ -30,8 +30,27 @@ const TaskSchema = new Schema({
     type: String,
     default: 'low'
   },
-  
-    required: tru
+  user: {
+    type: String,
+    required: true
+  },
+  due_date: {
+    type: Date,
+    required: true,
+  },
+  photo: {
+    type: String,
+    required: false
+  },
+  repeating: {
+    type: String,
+    required: true
+  },
+  open: {
+    type: Boolean,
+    default: true
+  }
+})
 
 
 export const Task = mongoose.model('tasks', TaskSchema)
