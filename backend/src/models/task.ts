@@ -4,11 +4,13 @@ const { Schema } = mongoose
 export interface ITask {
   name: string
   description: string
-  label: string,
-  priority: string,
-  user: string
-  photo: number
-  date: Date
+  id: number
+  photo: string 
+  priority: string // High, Medium, Low
+  label: string
+  due_date: Date
+  repeating: string // Daily, weekly
+  user_id: string
 }
 
 const TaskSchema = new Schema({
@@ -28,18 +30,8 @@ const TaskSchema = new Schema({
     type: String,
     default: 'low'
   },
-  user: {
-    type: String,
-    required: true
-  },
-  date: {
-    type: Date,
-    required: true,
-  },
-  photo: {
-    type: Buffer,
-    required: false
-  }
-})
+  
+    required: tru
+
 
 export const Task = mongoose.model('tasks', TaskSchema)
