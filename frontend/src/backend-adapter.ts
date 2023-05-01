@@ -49,7 +49,7 @@ export async function addTask(name: string, description: string, label: string, 
 
 export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, repeating: string, open: boolean, photo: string) {
     let task = {
-        _id: new mongoose.Types.ObjectId().toString(),
+        _id: id,
         due_date: new Date(),
         name: name,
         description: description,
@@ -63,7 +63,8 @@ export async function updateTask(id: string, name: string, description: string, 
     instance.put("tasks/" + id, task).then((response) => response.data)
 }
 
-export async function updateTask2(id: string, task: ITask) {
+export async function updateTask2(task: ITask) {
+    const id = task._id
     instance.put("tasks/" + id, task).then((response) => response.data)
 }
 
