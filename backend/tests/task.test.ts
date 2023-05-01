@@ -1,6 +1,6 @@
 // @ts-expect-error Importing ts file doesn't work otherwise (must be .js for some reason)
 import { Task } from '../../../src/models/task.ts'
-import { type ITask } from '../../../src/models/task.ts'
+import { type ITask } from '../src/models/task'
 import express, { Request, Response } from "express";
 import { expect } from '@jest/globals'
 

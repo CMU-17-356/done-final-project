@@ -1,2 +1,2 @@
 // @ts-expect-error Importing ts file doesn't work otherwise (must be .js for some reason)
-import { User } from '../../../src/models/user.ts'
+import { Photo } from '../src/models/photo.js'

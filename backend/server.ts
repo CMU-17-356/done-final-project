@@ -31,4 +31,21 @@ var server = app.listen(port, () => {
     console.log('Server is running on port ' + port + '!');
 });
 
+export async function connect() {
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
+}
+
+export async function close() {
+    await mongoose.connection.close();
+}
+
+export async function clearDatabase() {
+    const collections = mongoose.connection.collections;
+
+    for (const key in collections) {
+        const collection = collections[key];
+    await collection.deleteMany({});
+    }
+}
+
 export default server
