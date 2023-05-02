@@ -33,14 +33,22 @@ export function Example() {
           deleteTask(taskToDelete._id);
         }
         console.log(globalTasks);
-      };
+      }
+
+    const handleUpdate = async () => {
+        if (globalTasks !== undefined) {
+            const id = globalTasks[0]._id
+            updateTask(id, "updated example", "example task", '', '', 'user', 'weekly', true, '')
+        }
+    }
       
 
     return (
         <div>
-            <button onClick={handlePost}>POST</button>
-            <button onClick={handleGet}>GET</button>
+            <button onClick={handlePost}>Post</button>
             <button onClick={handleDelete}>Delete</button>
+            <button onClick={handleUpdate}>Update</button>
+            <button onClick={handleGet}>Refresh</button>
             <div>
                 <h2>GET result:</h2>
                 {globalTasks !== undefined ? (

@@ -5,7 +5,6 @@ const router = express.Router();
 
 // GET all Tasks
 router.get("/", (req, res) => {
-    console.log('get request')
     Task.find({}, (err: any, result: any) => {
         if (err) {
             res.json(err);
@@ -38,7 +37,6 @@ router.post("/", async (req, res) => {
 
 // UPDATE a Task
 router.put("/:id", async (req, res) => {
-    console.log(req.params.id)
     const task = req.body;
     console.log("update task", task)
     Task.findOneAndUpdate({ _id: req.params.id }, { $set: task }, (err: any, result: any) => {
