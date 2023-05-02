@@ -4,14 +4,16 @@ import { useNavigate, useLocation, Link } from 'react-router-dom'
 import ErrorMessage from '../components/core/Error';
 // import app from '../api/Firebase';
 
-const Login = () => {
-  const [username, setUsername] = useState('')
+const Login = ({setNavState, setUsername}) => {
+  const [username, setLocalUsername] = useState('')
   const [password, setPassword] = useState('')
   // Hold error text.
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  setNavState(false)
 
   // const redirectAction = () => history.replace(location.state?.from || '/user');
 
@@ -53,7 +55,10 @@ const Login = () => {
     // }).catch((err: { message: React.SetStateAction<string>; }) => {
     //   setError(err.message);
     // });
+
   },[])
+
+  // ADD a delete request to backend to kill session  
 
   return (
     <>
@@ -72,15 +77,20 @@ const Login = () => {
                     //   }).catch((err: { message: React.SetStateAction<string>; }) => {
                     //     setError(err.message);
                     //   });
+
+                    // get session 
+                    let result = true
+                    setNavState(result);
+                    setUsername(username);
+
                     navigate('/todo')
-                    console.log(username)
-                    console.log(password)
-                    setUsername('')
+                    setLocalUsername('')
                     setPassword('')
+
                   }}
                   >
                     <div className="form-group mt-3">
-                      <input className="form-control" value={username} onChange={e => setUsername(e.target.value)} type="text" id="username" name="username" placeholder="Username" required />
+                      <input className="form-control" value={username} onChange={e => setLocalUsername(e.target.value)} type="text" id="username" name="username" placeholder="Username" required />
                     </div>
                     <div className="form-group mt-3">
                       <input className="form-control" value={password} onChange={e => setPassword(e.target.value)} type="password" id="password" name="password" placeholder="Password" required />

@@ -1,13 +1,24 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = ({navState, setNavState}) => {
+
+  // const [show, setShow] = useState(false);
+
+  // useEffect(() => {
+  //   setShow(true);
+  // }, []);
+
+  // // get request  session and see if exists
+  // setShow(true);
+
   return (
     <nav className="navbar navbar-expand-sm navbar-light">
       <a className="navbar-brand" href="/todo">
         DONE
       </a>
 
-      <div className="basic-navbar-nav" id="navbarNavDropdown">
+      {(navState) && (<div className="basic-navbar-nav" id="navbarNavDropdown">
         <ul className="navbar-nav">
           <li className="nav-item active">
             <a className="nav-link" href="/todo">
@@ -20,12 +31,12 @@ const Navbar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/signup">
-              Account
+            <a className="nav-link" href="/">
+              Logout
             </a>
           </li>
         </ul>
-      </div>
+      </div>)}
     </nav>
   );
 };

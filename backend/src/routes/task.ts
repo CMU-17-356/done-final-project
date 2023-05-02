@@ -27,6 +27,7 @@ router.get("/:id", (req, res) => {
 
 // CREATE a new Task
 router.post("/", async (req, res) => {
+    console.log('post request')
     const task = req.body;
     const newTask = new Task(task);
     await newTask.save();
@@ -37,6 +38,7 @@ router.post("/", async (req, res) => {
 // UPDATE a Task
 router.put("/:id", async (req, res) => {
     const task = req.body;
+    console.log("update task", task)
     Task.findOneAndUpdate({ _id: req.params.id }, { $set: task }, (err: any, result: any) => {
         if (err) {
             res.json(err);

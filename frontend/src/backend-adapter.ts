@@ -1,15 +1,18 @@
 import axios from "axios";
 import mongoose from "mongoose";
 
-export interface ITask {
+  export interface ITask {
     _id: string
     name: string
     description: string
-    label: string,
-    priority: string,
+    label: string
+    priority?: string
+    dueDate?: Date | null
+    recurring?: string
+    day?: string | null
+    completed: {date: Date, photo: string}[]
+    createdAt: Date
     user: string
-    photo: number
-    date: Date
   }
 
 
@@ -20,7 +23,18 @@ let instance = axios.create({
 
 export async function getAllTasks(username: string) {
     const response = await instance.get("tasks/")
-    const tasks = response.data.filter((task: ITask) => {return username === task.user})
+    let tasks = response.data.filter((task: ITask) => {return username === task.user})
+    tasks.forEach((x) => (x.createdAt = new Date(x.createdAt)))
+    tasks.forEach((x) => {
+        if(x.dueDate !== null){
+            x.dueDate = new Date(x.dueDate)
+        }
+    })
+    tasks.forEach((x) => {
+        x.completed.forEach(y => {
+            y.date = new Date(y.date)
+        });
+    })
     return tasks
 }
 
@@ -31,45 +45,32 @@ export async function getTask(id: string) {
     return task
 }
 
-export async function addTask(name: string, description: string, label: string, priority: string, user: string, repeating: string, open: boolean, photo: string) {
-    let task = {
-        _id: new mongoose.Types.ObjectId().toString(),
-        due_date: new Date(),
-        name: name,
-        description: description,
-        user: user,
-        label: label,
-        priority: priority,
-        repeating: repeating,
-        photo: photo,
-        open: open
-    }
-    instance.post("tasks/", task).then((response) => response.data)
+export async function addTask(task) {
+    task._id = new mongoose.Types.ObjectId().toString()
+    await instance.post("tasks/", task) 
 }
 
-export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, repeating: string, open: boolean, photo: string) {
+export async function updateTask(id: string, name: string, description: string, label: string, priority: string, user: string, recurring: string, status: boolean, photo: string) {
     let task = {
         _id: id,
-        due_date: new Date(),
+        dueDate: new Date(),
         name: name,
         description: description,
         user: user,
         label: label,
         priority: priority,
-        photo: photo,
-        repeating: repeating,
-        open: open
+        recurring: recurring,
     }
     instance.put("tasks/" + id, task).then((response) => response.data)
 }
 
 export async function updateTask2(task: ITask) {
     const id = task._id
-    instance.put("tasks/" + id, task).then((response) => response.data)
+    await instance.put("tasks/" + id, task).then((response) => response.data)
 }
 
 export async function deleteTask(id: string) {
-    instance.delete("tasks/" + id).then((response) => response.data)
+    await instance.delete("tasks/" + id)
 }
 
 

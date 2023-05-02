@@ -8,20 +8,26 @@ import HistoryView from './views/HistoryView'
 import Example from './views/Backend_Example';
 import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
+import Navbar from "./components/Navbar";
+import { useLocalStorage } from "./hooks/UseLocalStorage"
+
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css"
-import Navbar from "./components/Navbar";
 
 function App() {
+
+  const [navState, setNavState] = useLocalStorage<Boolean>("navState", false)
+  const [username, setUsername] = useLocalStorage<String>("username", "")
+
   return (
     <Container className="mb-4">
     <div>
-      <Navbar />
+      <Navbar navState={navState} setNavState={setNavState}/>
     </div>
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Login setNavState={setNavState} setUsername={setUsername}/>} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/todo" element={<TodoList />} />
+      <Route path="/todo" element={<TodoList username={username}/>} />
       <Route path="/upload" element={<ImageUpload />} />
       <Route path="/history" element={<HistoryView />} />
       <Route path="/example" element={<Example />} />

@@ -7,7 +7,19 @@ export function Example() {
     const handlePost = () => {
         // Function to handle POST button click
         console.log('POST button clicked');
-        addTask("example", "example task", '', '', 'user', 'weekly', true, '')
+        const emptyTodo: ITask = {
+            _id: "",
+            name: "example",
+            description: "example task",
+            label: "label",
+            priority: "Low",
+            dueDate: null,
+            completed: [],
+            createdAt: new Date(),
+            user: 'user'
+          }
+
+        addTask(emptyTodo)
     }
 
     const handleGet = async () => {

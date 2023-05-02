@@ -17,9 +17,9 @@ const EditTodo: React.FC<Props> = ({todo, saveTodo, clearForm}) => {
   const [dueDate, setDueDate] = useState(todo.dueDate)
   const [recurring, setRecurring] = useState(todo.recurring)
   const [day, setDay] = useState(todo.day !== undefined ? todo.day : 'Monday')
-  const [status, setStatus] = useState(todo.status)
-  const url = todo.url
+  const [completed, setCompleted] = useState(todo.completed)
   const createdAt = todo.createdAt
+  const user = todo.user
   const [show, setShow] = useState(false)
 
   let priorities = [
@@ -67,15 +67,12 @@ const EditTodo: React.FC<Props> = ({todo, saveTodo, clearForm}) => {
         dueDate: dueDate,
         recurring: recurring,
         day: day,
-        status: status,
-        url: url,
+        completed: completed,
         createdAt: createdAt,
+        user: user
       }
-
-    console.log("EDITED TODO: ", todo)
-
+      
     saveTodo(e, todo); 
-
     clearForm(false);
   }
 
@@ -115,7 +112,6 @@ const EditTodo: React.FC<Props> = ({todo, saveTodo, clearForm}) => {
         </div>
         <div className="form-group mt-3">
             <select onChange={(e) => setRecurring(e.currentTarget.value)} > 
-                {/* <option value={repeating}> -- Select a recurring schedule -- </option> */}
                 {recurrings.map((x) => (x.value == recurring && (<option value={x.value} selected>{x.label}</option>)) || (x.value != recurring && (<option value={x.value}>{x.label}</option>)))}
 
             </select>
@@ -128,7 +124,7 @@ const EditTodo: React.FC<Props> = ({todo, saveTodo, clearForm}) => {
             </div>
         }
         <div className="form-group mt-3" >
-            <button disabled={name == "" || description == "" ? true: false} >Save Todo</button>
+            <button disabled={name == ""? true: false} >Save Todo</button>
         </div>
     </form>
     </div>
