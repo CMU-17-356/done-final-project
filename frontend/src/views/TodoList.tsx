@@ -7,6 +7,15 @@ import Select from "react-select";
 import Button from 'react-bootstrap/Button';
 import {getAllTasks, getTask, updateTask2, deleteTask, addTask, ITask} from '../backend-adapter'
 
+const sameDay = (first:Date, second:Date) =>
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
+
+const beforeDay = (first:Date, second:Date) =>
+    first.getFullYear() <= second.getFullYear() &&
+    first.getMonth() <= second.getMonth() &&
+    first.getDate() <= second.getDate();
 
 const TodoList = (username) => {
   const [todos, setTodos] = useState<ITodo[]>([])
@@ -19,9 +28,18 @@ const TodoList = (username) => {
 
   const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
+  var checkSort = (a, b) => {
+    if(sort == "priority"){
+      return sortPriority(a,b);
+    } else if (sort == "dueDate") {
+      return sortDate(a,b);
+    }
+    return 0;
+  }
+
   var sortPriority = (a, b) => {
     if(a.priority === b.priority){
-      return 0
+      return sortDate(a,b)
     } else if (a.priority === "High") {
       return -1
     } else if (b.priority === "High") {
@@ -35,7 +53,7 @@ const TodoList = (username) => {
     } else if (b.priority === "Low") {
       return 1
     } else {
-      return 0
+      return sortDate(a,b)
     }
   }
 
@@ -43,24 +61,17 @@ const TodoList = (username) => {
     if(a.dueDate !== undefined && b.dueDate !== undefined && a.dueDate !== null && b.dueDate !== null){
       let larger = a.dueDate > b.dueDate;
       return larger ? 1 : -1;
-    } else if (a.dueDate == undefined || a.dueDate == null) {
+    } else if ((a.dueDate == undefined || a.dueDate == null) && (b.dueDate !== undefined && b.dueDate !== null)) {
       return 1;
-    } else if (b.dueDate == undefined || b.dueDate == null) {
+    } else if ((b.dueDate == undefined || b.dueDate == null) && (a.dueDate !== undefined && a.dueDate !== null)) {
       return -1;
     } else {
-      return 0;
+      return sortPriority(a,b);
     }
   }
 
   var handleSortChange = (selected) => {
     setSort(selected.value);
-
-    if(selected.value == "priority"){
-      setTodos(oldTodos => oldTodos.sort((a, b) => sortPriority(a,b)));
-    } else if (selected.value == "dueDate") {
-      setTodos(oldTodos => oldTodos.sort((a, b) => sortDate(a,b)));
-    }
-
   };
   var handleFilterChange = (selected) => {
     setFilter(selected.value);
@@ -91,8 +102,8 @@ const TodoList = (username) => {
   const fetchTodos = () => {
     getAllTasks(username.username)
     .then((curr) => {
-      setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-      setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+      setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+      setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
       setFilterOptions(getFilterOptions(curr));
     })
   }
@@ -108,8 +119,8 @@ const TodoList = (username) => {
       .then(()=> {
         getAllTasks(username.username)
         .then((curr) => {
-          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
           setFilterOptions(getFilterOptions(curr));
         })
       })
@@ -125,8 +136,8 @@ const TodoList = (username) => {
       .then(()=> {
         getAllTasks(username.username)
         .then((curr) => {
-          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
           setFilterOptions(getFilterOptions(curr));
         })
       })
@@ -139,8 +150,8 @@ const TodoList = (username) => {
       .then(()=> {
         getAllTasks(username.username)
         .then((curr) => {
-          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
           setFilterOptions(getFilterOptions(curr));
         })
       })
@@ -151,8 +162,8 @@ const TodoList = (username) => {
       .then(()=> {
         getAllTasks(username.username)
         .then((curr) => {
-          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-          setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+          setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
           setFilterOptions(getFilterOptions(curr));
         })
       })
@@ -166,8 +177,8 @@ const TodoList = (username) => {
     });
     getAllTasks(username.username)
       .then((curr) => {
-        setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-        setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+        setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+        setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
         setFilterOptions(getFilterOptions(curr));
       })
   }
@@ -179,8 +190,8 @@ const TodoList = (username) => {
     });
     getAllTasks(username.username)
       .then((curr) => {
-        setCompletedTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length > 0))
-        setTodos(curr.filter((task) => task.completed.filter((x) => x.date.getDate() === date.getDate()).length == 0))
+        setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+        setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
         setFilterOptions(getFilterOptions(curr));
       })
   }
@@ -225,18 +236,18 @@ const TodoList = (username) => {
         }).filter((todo) => {
           if(todo.dueDate !== undefined && todo.dueDate !== null){
             if (todo.recurring === "Weekly"){
-              return todo.createdAt <= date && todo.dueDate >= date && weekday[date.getDay()] === todo.day;
+              return beforeDay(todo.createdAt,date) && beforeDay(date, todo.dueDate) && weekday[date.getDay()] === todo.day;
             }
-            return todo.createdAt <= date && todo.dueDate >= date;
+            return beforeDay(todo.createdAt,date) && beforeDay(date, todo.dueDate);
           } else {
               if (todo.recurring === "Weekly"){
-                return todo.createdAt <= date && weekday[date.getDay()] === todo.day;
+                return beforeDay(todo.createdAt,date) && weekday[date.getDay()] === todo.day;
               } else if (todo.recurring === "Daily"){
-                return todo.createdAt <= date;
+                return beforeDay(todo.createdAt,date);
               }
-              return todo.createdAt.toDateString() === date.toDateString();
+              return sameDay(todo.createdAt, date);
           }
-        }).map((todo: ITodo) => (
+        }).sort((a, b) => checkSort(a,b)).map((todo: ITodo) => (
         <TodoItem
           key={todo._id}
           updateTodo={handleCompleteTodo}
@@ -254,18 +265,18 @@ const TodoList = (username) => {
         }).filter((todo) => {
           if(todo.dueDate !== undefined && todo.dueDate !== null){
             if (todo.recurring === "Weekly"){
-              return todo.dueDate >= date && weekday[date.getDay()] === todo.day;
+              return beforeDay(todo.createdAt,date) && beforeDay(date, todo.dueDate) && weekday[date.getDay()] === todo.day;
             }
-            return todo.dueDate >= date;
+            return beforeDay(todo.createdAt,date) && beforeDay(date, todo.dueDate);
           } else {
               if (todo.recurring === "Weekly"){
-                return weekday[date.getDay()] === todo.day;
+                return beforeDay(todo.createdAt,date) && weekday[date.getDay()] === todo.day;
               } else if (todo.recurring === "Daily"){
-                return true;
+                return beforeDay(todo.createdAt,date);
               }
-              return todo.createdAt.getDate() === date.getDate();
+              return sameDay(todo.createdAt, date);
           }
-        }).map((todo: ITodo) => (
+        }).sort((a, b) => checkSort(a,b)).map((todo: ITodo) => (
         <TodoItem
           key={todo._id}
           updateTodo={handleCompleteTodo}

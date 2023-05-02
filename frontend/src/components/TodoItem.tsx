@@ -11,10 +11,14 @@ type Props = TodoProps & {
   date: Date
 }
 
+const sameDay = (first, second) =>
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
 
 const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo, date}) => {
 
-  let completed = todo.completed.filter((x) => x.date.getDate() === date.getDate())
+  let completed = todo.completed.filter((x) => sameDay(x.date,date))
   let status = (completed.length > 0)
 
   const checkTodo: string = status ? `line-through` : ""
