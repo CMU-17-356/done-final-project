@@ -55,7 +55,7 @@ const Signup = () => {
                     </div>
                     <div className="form-group mt-3">
                       <p className="signup-margin text-secondary">
-                        <Link to="/login"> Return to login page</Link>
+                        <Link to="/"> Return to login page</Link>
                       </p>
                       { error ? <ErrorMessage message={error} /> : null }
                       <button className="btn btn-primary float-right" type="submit">Submit</button>

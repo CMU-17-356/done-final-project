@@ -8,12 +8,21 @@ type Props = TodoProps & {
   updateTodo: (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo) => void
   deleteTodo: (_id: string) => void
   saveTodo: (e: React.FormEvent, formData: ITodo | any) => void 
+  date: Date
 }
 
+const sameDay = (first, second) =>
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
 
-const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo }) => {
-  const checkTodo: string = todo.status ? `line-through` : ""
-  const checkDone: string = todo.status ? `Card-done` : 'Card'
+const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo, date}) => {
+
+  let completed = todo.completed.filter((x) => sameDay(x.date,date))
+  let status = (completed.length > 0)
+
+  const checkTodo: string = status ? `line-through` : ""
+  const checkDone: string = status ? `Card-done` : 'Card'
   const [showEdit, setShowEdit] = useState(false)
 
   // Create a reference to the hidden file input element
@@ -30,17 +39,16 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo }) => {
         <div className={checkDone}>
           <div className="Card--text">
             <h1 className={checkTodo}>{todo.name}</h1>
-            <span className={checkTodo}>{todo.description}</span>
-            <br></br>
-            <span className={checkTodo}><b>Label:</b> {todo.label}</span>
-            <br></br>
-            <span className={checkTodo}><b>Priority:</b> {todo.priority}</span>
-            <br></br>
-            {todo.dueDate != null && (<span className={checkTodo}><b>Due Date:</b> {format(todo.dueDate, "h:mm a, MMMM do yyyy")}</span>)}
+            <div className="textbox" style={{ flexShrink: 1 }}> {todo.description}</div>
+            {todo.label != "" && (<div className={checkTodo}><b>Label:</b> {todo.label}</div>)}
+            {todo.priority != "" && (<div className={checkTodo}><b>Priority:</b> {todo.priority}</div>)}
+            {todo.dueDate != null && (<div className={checkTodo}><b>Due Date:</b> {format(todo.dueDate, "h:mm a, MMMM do yyyy")}</div>)}
+            {todo.recurring == "Daily" && (<div className={checkTodo}><b>Recurring:</b> {todo.recurring}</div>)}
+            {todo.recurring == "Weekly" && (<div className={checkTodo}><b>Recurring:</b> {todo.recurring} on {todo.day}</div>)}
           </div>
           <div className='Card--button'>
     
-            <button onClick={fileUpload} className={todo.status ? `hide-button` : "Card--button__done"}>Complete</button>
+            <button onClick={fileUpload} className={status ? `hide-button` : "Card--button__done"}>Complete</button>
             <input
                 style={{display: 'none'}} /* Make the file input element invisible */
                 ref={inputRef}
@@ -48,18 +56,17 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo }) => {
                 accept="image/*"
                 onChange={(e) => updateTodo(e,todo)}
             />
-            <img className={todo.status ? "Card--button__done" : `hide-button`} src={todo.url} alt={todo.name} height="80px" />
+            {status && <img className={"Card--button__done"} src={completed[0].photo} alt={todo.name} height="80px" />}
+            <button
+              onClick={() => setShowEdit(true)}
+            >
+              Edit
+            </button>
             <button
               onClick={() => deleteTodo(todo._id)}
               className="Card--button__delete"
             >
               Delete
-            </button>
-            <button
-              onClick={() => setShowEdit(true)}
-              className="Card--button__done"
-            >
-              Edit
             </button>
           </div>
         </div>
@@ -73,7 +80,6 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo }) => {
               </div> */}
               <button
                 onClick={() => setShowEdit(false)}
-                className="Card--button__done"
               >
                 Cancel
               </button>
