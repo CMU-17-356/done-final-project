@@ -46,7 +46,6 @@ export async function getTask(id: string) {
 }
 
 export async function addTask(task) {
-    console.log("created new task ", task)
     task._id = new mongoose.Types.ObjectId().toString()
     await instance.post("tasks/", task) 
 }

@@ -84,8 +84,6 @@ const Login = ({setNavState, setUsername}) => {
                     setUsername(username);
 
                     navigate('/todo')
-                    console.log(username)
-                    console.log(password)
                     setLocalUsername('')
                     setPassword('')
 

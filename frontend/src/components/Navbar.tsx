@@ -6,12 +6,10 @@ const Navbar = ({navState, setNavState}) => {
   // const [show, setShow] = useState(false);
 
   // useEffect(() => {
-  //   console.log("navbar use effect?")
   //   setShow(true);
   // }, []);
 
   // // get request  session and see if exists
-  console.log("navbar shown", navState)
   // setShow(true);
 
   return (
