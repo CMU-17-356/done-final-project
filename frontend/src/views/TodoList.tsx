@@ -139,7 +139,7 @@ const convertFileToBase64 = (file: File) => {
     reader.readAsDataURL(file);
   })
 }
-  const handleCompleteTodo = async (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo): Promise<void> => {
+  const handleCompleteTodo = async (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo) => {
 
     const selectedFiles = event.target.files as FileList;
     const file: File = selectedFiles?.[0] as File;
@@ -160,6 +160,7 @@ const convertFileToBase64 = (file: File) => {
     }
 
   }
+ 
 
   const handleEditTodo = (e: React.FormEvent, todo: ITodo): void => {
     e.preventDefault()
