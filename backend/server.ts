@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from 'mongoose';
-import { TaskRoutes} from './src/routes/index';
+import { TaskRoutes, UserRoutes } from './src/routes/index';
 // import cors from 'cors';
 
 // Allow the use of environment variables
@@ -26,6 +26,7 @@ app.use(function(req, res, next) {
 
 // Create appropriate API endpoints
 app.use("/api/tasks", TaskRoutes)
+app.use("/api/users", UserRoutes)
 
 var server = app.listen(port, () => {
     console.log('Server is running on port ' + port + '!');
