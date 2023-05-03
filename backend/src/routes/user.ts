@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 
 // GET a single User
 router.get("/:username", (req, res) => {
-    User.findById(req.params.username, (err: any, result: any) => {
+    User.find({ username: req.params.username}, (err: any, result: any) => {
         if (err) {
             res.json(err);
         } else {

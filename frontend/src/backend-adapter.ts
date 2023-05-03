@@ -75,29 +75,22 @@ export async function deleteTask(id: string) {
 
 export async function addUser(user) {
     // Check for duplicates 
-    let duplicate = false
-    const response = await instance.get("users/" + user.username).catch(function (error) {
-        // Username already exists
-        duplicate = true
-      });
-      if (duplicate == false) {
+    const response = await instance.get("users/" + user.username);
+    if (response.data.length == 0) {
         await instance.post("users/", user) 
-      } else {
+    } else {
         throw new Error("Username already exists.")
-      }
-
-     
+    }
 }
 
 export async function authenticateUser(username: string, password: string) {
-    const response = await instance.get("users/" + username).catch(function (error) {
-    // Username doesn't exist
+    const response = await instance.get("users/" + username)
+    if (response.data.length == 0) {
         throw new Error("Username doesn't exist.")
-  });
+    }
     const user = response.data
     if (user.password === password) {
         return true
     } 
-
     return false 
 }
