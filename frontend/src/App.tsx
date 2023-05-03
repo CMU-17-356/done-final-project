@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import Navbar from "./components/Navbar";
 import { useLocalStorage } from "./hooks/UseLocalStorage"
+import HistoryView from "./views/HistoryView"
 
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -26,6 +27,7 @@ function App() {
       <Route path="/" element={<Login setNavState={setNavState} setUsername={setUsername}/>} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/todo" element={<TodoList username={username}/>} />
+      <Route path="/history" element={<HistoryView username={username}/>} />
       <Route path="/upload" element={<ImageUpload />} />
     </Routes>
     </Container>

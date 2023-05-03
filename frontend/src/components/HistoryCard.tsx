@@ -8,23 +8,24 @@ export interface HistoryCardProps {
   date: string;
   description: string;
   image: string;
+
 }
 
-const HistoryCard:FunctionComponent<HistoryCardProps>=(props:HistoryCardProps) => {
+const HistoryCard: FunctionComponent<HistoryCardProps> = (props: HistoryCardProps) => {
   return (
     <Card style={{ width: '12rem' }}>
-    <Card.Img variant="top" src="image" />
-    <Card.Body>
-      <Card.Title style={{ color: 'black' }}>{props.name}</Card.Title>
-      <Card.Text style={{ color: 'black' }}>
-        {props.description}
+      <Card.Img variant="top" src="image" />
+      <Card.Body>
+        <Card.Title style={{ color: 'black' }}>{props.name}</Card.Title>
+        <Card.Text style={{ color: 'black' }}>
+          {props.description}
         </Card.Text >
         <Card.Text style={{ color: 'black' }}>
-        {props.date}
-      </Card.Text >
-      <Button variant="primary">For more details</Button>
-    </Card.Body>
-  </Card>
+          {props.date}
+        </Card.Text >
+        
+      </Card.Body>
+    </Card>
   );
 }
 
