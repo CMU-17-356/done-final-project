@@ -14,7 +14,7 @@ export interface HistoryCardProps {
 const HistoryCard: FunctionComponent<HistoryCardProps> = (props: HistoryCardProps) => {
   return (
     <Card style={{ width: '12rem' }}>
-      <Card.Img variant="top" src="image" />
+      <Card.Img variant="top" src={props.image} />
       <Card.Body>
         <Card.Title style={{ color: 'black' }}>{props.name}</Card.Title>
         <Card.Text style={{ color: 'black' }}>
