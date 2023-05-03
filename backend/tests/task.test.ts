@@ -4,6 +4,18 @@ import { type ITask } from '../src/models/task'
 import express, { Request, Response } from "express";
 import { expect } from '@jest/globals'
 
+_id: string
+name: string
+description: string
+label: string
+priority?: string
+dueDate?: Date | null
+recurring?: string
+day?: string | null
+completed: {date: Date, photo: string}[]
+createdAt: Date
+user: string
+
 describe('task', () => {
     it('should create a new Task with the appropriate fields', () => {
       const task: ITask = {

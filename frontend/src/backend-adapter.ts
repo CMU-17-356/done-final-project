@@ -73,4 +73,24 @@ export async function deleteTask(id: string) {
     await instance.delete("tasks/" + id)
 }
 
+export async function addUser(user) {
+    // Check for duplicates 
+    const response = await instance.get("users/" + user.username);
+    if (response.data.length == 0) {
+        await instance.post("users/", user) 
+    } else {
+        throw new Error("Username already exists.")
+    }
+}
 
+export async function authenticateUser(username: string, password: string) {
+    const response = await instance.get("users/" + username)
+    if (response.data.length == 0) {
+        throw new Error("Username doesn't exist.")
+    }
+    const user = response.data
+    if (user.password === password) {
+        return true
+    } 
+    return false 
+}
