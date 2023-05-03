@@ -2,8 +2,10 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 export interface IUser {
-  name: string
-  email_id: string
+  first_name: string
+  last_name: string
+  username: string
+  password: string
 }
 
 const UserSchema = new Schema({
@@ -16,7 +18,7 @@ const UserSchema = new Schema({
     required: true
   },
   username: {
-    type: String, // Positive Int
+    type: String, 
     required: true
   },
   password: {
