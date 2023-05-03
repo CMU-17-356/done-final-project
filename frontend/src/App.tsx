@@ -10,7 +10,7 @@ import { Route, Routes } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import Navbar from "./components/Navbar";
 import { useLocalStorage } from "./hooks/UseLocalStorage"
-
+import 'react-calendar/dist/Calendar.css';
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css"
 
@@ -29,7 +29,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/todo" element={<TodoList username={username}/>} />
       <Route path="/upload" element={<ImageUpload />} />
-      <Route path="/history" element={<HistoryView />} />
+      <Route path="/history" element={<HistoryView username={username}/>} />
       <Route path="/example" element={<Example />} />
     </Routes>
     </Container>

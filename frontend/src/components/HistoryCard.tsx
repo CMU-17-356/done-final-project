@@ -13,7 +13,7 @@ export interface HistoryCardProps {
 const HistoryCard:FunctionComponent<HistoryCardProps>=(props:HistoryCardProps) => {
   return (
     <Card style={{ width: '12rem' }}>
-    <Card.Img variant="top" src="image" />
+    <Card.Img variant="top" src={props.image} />
     <Card.Body>
       <Card.Title style={{ color: 'black' }}>{props.name}</Card.Title>
       <Card.Text style={{ color: 'black' }}>
@@ -22,7 +22,6 @@ const HistoryCard:FunctionComponent<HistoryCardProps>=(props:HistoryCardProps) =
         <Card.Text style={{ color: 'black' }}>
         {props.date}
       </Card.Text >
-      <Button variant="primary">For more details</Button>
     </Card.Body>
   </Card>
   );

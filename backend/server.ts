@@ -11,7 +11,7 @@ dotenv.config()
 const app = express();
 const port = 8080; //process.env.PORT;
 
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 // Connect to MongoDB Atlas Database
 mongoose.set("strictQuery", false)

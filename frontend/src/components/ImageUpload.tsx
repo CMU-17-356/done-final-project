@@ -15,9 +15,26 @@ const ImageUpload: React.FC = () => {
     // });
   }, []);
 
+  const convertFileToBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64 = reader.result;
+        resolve(base64)
+        console.log(base64)
+      }
+
+      reader.readAsDataURL(file);
+    })
+  }
+
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files as FileList;
+    const file = selectedFiles[0];
+
     setCurrentImage(selectedFiles?.[0]);
+
     setPreviewImage(URL.createObjectURL(selectedFiles?.[0]));
     setProgress(0);
   };

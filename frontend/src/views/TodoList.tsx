@@ -126,21 +126,39 @@ const TodoList = (username) => {
       })
 }
 
-  const handleCompleteTodo = (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo): void => {
+  const convertFileToBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64 = reader.result;
+        resolve(base64)
+        console.log(base64)
+      }
+
+      reader.readAsDataURL(file);
+    })
+  }
+  const handleCompleteTodo = async (event: React.ChangeEvent<HTMLInputElement>, todo: ITodo) => {
 
     const selectedFiles = event.target.files as FileList;
-    let url = URL.createObjectURL(selectedFiles?.[0]);
-    todo.completed.push({date: date, photo: url});
+    const file: File = selectedFiles?.[0] as File;
+    if (file) {
+      const base64String = await convertFileToBase64(file)
+      let url = base64String as string;
+      todo.completed.push({date: date, photo: url});
 
-    updateTask2(todo)
-      .then(()=> {
-        getAllTasks(username.username)
-        .then((curr) => {
-          setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
-          setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
-          setFilterOptions(getFilterOptions(curr));
-        })
-      })
+      updateTask2(todo)
+          .then(()=> {
+            getAllTasks(username.username)
+                .then((curr) => {
+                  setCompletedTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length > 0))
+                  setTodos(curr.filter((task) => task.completed.filter((x) => sameDay(x.date,date)).length == 0))
+                  setFilterOptions(getFilterOptions(curr));
+                })
+          })
+    }
+
   }
 
   const handleEditTodo = (e: React.FormEvent, todo: ITodo): void => {
