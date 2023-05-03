@@ -17,7 +17,7 @@ import mongoose from "mongoose";
 
 
 let instance = axios.create({
-    baseURL: "http://localhost:8080/api/",
+    baseURL: "https://doneserver.fly.dev/api",
   });
 
 
@@ -82,6 +82,11 @@ export async function addUser(user) {
     } else {
         return false
     }
+}
+
+export async function updateUser(user) {
+    const id = user.username
+    await instance.put("tasks/" + id, user).then((response) => response.data)
 }
 
 export async function authenticateUser(username: string, password: string) {

@@ -25,6 +25,19 @@ router.get("/:username", (req, res) => {
     });
 });
 
+// UPDATE a Task
+router.put("/:username", async (req, res) => {
+    const user = req.body;
+    console.log("update task", user, req.params.username)
+    User.findOneAndUpdate({ username: user.username}, { $set: user }, (err: any, result: any) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
 // CREATE a new User
 router.post("/", async (req, res) => {
     console.log('post request')
