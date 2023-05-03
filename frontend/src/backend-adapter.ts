@@ -95,7 +95,7 @@ export async function authenticateUser(username: string, password: string) {
         throw new Error("Username doesn't exist.")
   });
     const user = response.data
-    if (user.password == password) {
+    if (user.password === password) {
         return true
     } 
 
