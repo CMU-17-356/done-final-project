@@ -80,7 +80,7 @@ const Signup = () => {
                       { error ? <ErrorMessage message={error} /> : null }
                       <button className="btn btn-primary float-right" type="submit">Submit</button>
                     </div>
-                    { failed ? "Failed to sign up!" : null }
+                    { failed ? <h1 style={{ color: 'red' }}>Failed to sign up!</h1> : null }
                   </form>
                 </div>
               </div>

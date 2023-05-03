@@ -112,7 +112,8 @@ const Login = ({setNavState, setUsername}) => {
                         <Link to="/signup">Sign Up Here</Link>
                       </p>
                     </div>
-                    { error ? "Failed to login!" : null }
+                    { error ? <h1 style={{ color: 'red' }}>Failed to login!</h1> : null }
+                    
                   </form>
                 </div>
               </div>
