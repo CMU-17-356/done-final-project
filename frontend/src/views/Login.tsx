@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { signin, signup, userFind, checkLogin } from '../api/Login';
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import ErrorMessage from '../components/core/Error';
-// import app from '../api/Firebase';
+import {addUser, authenticateUser} from '../backend-adapter'
 
 const Login = ({setNavState, setUsername}) => {
   const [username, setLocalUsername] = useState('')
   const [password, setPassword] = useState('')
   // Hold error text.
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,7 +69,7 @@ const Login = ({setNavState, setUsername}) => {
               <div className="card">
                 <div className="card-body">
                   <h1 style={{ color: 'blue' }}> DONE</h1>
-                  <form onSubmit={e => {
+                  <form onSubmit={async e => {
                     e.preventDefault()
                     // signin(username, password)
                     //   .then((res: any) => {
@@ -79,21 +79,29 @@ const Login = ({setNavState, setUsername}) => {
                     //   });
 
                     // get session 
-                    let result = true
-                    setNavState(result);
-                    setUsername(username);
+                    console.log(username, password)
+                    let result = await authenticateUser(username,password)
 
-                    navigate('/todo')
-                    setLocalUsername('')
-                    setPassword('')
+                    setNavState(result);
+
+                    if(result){
+                      console.log(username)
+                      setUsername(username);
+                      navigate('/todo')
+                      setLocalUsername('')
+                      setPassword('')
+                    } else {
+                      console.log("failed to login")
+                      setError(true)
+                    }
 
                   }}
                   >
                     <div className="form-group mt-3">
-                      <input className="form-control" value={username} onChange={e => setLocalUsername(e.target.value)} type="text" id="username" name="username" placeholder="Username" required />
+                      <input className="form-control" value={username} onChange={e => {setLocalUsername(e.target.value); setError(false);}} type="text" id="username" name="username" placeholder="Username" required />
                     </div>
                     <div className="form-group mt-3">
-                      <input className="form-control" value={password} onChange={e => setPassword(e.target.value)} type="password" id="password" name="password" placeholder="Password" required />
+                      <input className="form-control" value={password} onChange={e => {setPassword(e.target.value); setError(false);}} type="password" id="password" name="password" placeholder="Password" required />
                     </div>
                     <div className="form-group form-row  mt-3">
                       <button type="submit" className="btn btn-primary">Log In</button>
@@ -103,8 +111,8 @@ const Login = ({setNavState, setUsername}) => {
                         <br></br>
                         <Link to="/signup">Sign Up Here</Link>
                       </p>
-                      { error ? <ErrorMessage message={error} /> : null }
                     </div>
+                    { error ? "Failed to login!" : null }
                   </form>
                 </div>
               </div>

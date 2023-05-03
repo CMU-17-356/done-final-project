@@ -20,7 +20,7 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, saveTodo, date}) 
 
   let completed = todo.completed.filter((x) => sameDay(x.date,date))
   let status = (completed.length > 0)
-
+ 
   const checkTodo: string = status ? `line-through` : ""
   const checkDone: string = status ? `Card-done` : 'Card'
   const [showEdit, setShowEdit] = useState(false)
