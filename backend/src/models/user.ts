@@ -6,6 +6,7 @@ export interface IUser {
   last_name: string
   username: string
   password: string
+  history_clicks: number
 }
 
 const UserSchema = new Schema({
@@ -25,6 +26,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  history_clicks: {
+    type: Number,
+    required: true
+  }
 })
 
 export const User = mongoose.model('users', UserSchema)
