@@ -141,7 +141,12 @@ export const CalendarView = ({tasks}: { tasks: ITodo[] }) => {
             <input
                 value={moment(month).format('YYYY-MM')}
                 onChange={e => {
-                    setMonth(new Date(e.target.value));
+                    const inputDate = moment(e.target.value + "-01"); // Append "-01" to ensure it is the first day of the month
+  setMonth(inputDate.toDate());
+                    //setMonth(new Date(e.target.value));
+                    // const currentMonth = moment(e.target.value);
+                    // const nextMonth = currentMonth.clone().subtract(1, 'months');
+                    // setMonth(nextMonth.toDate());
                     setDirty(true);
                 }}
                 type={'month'} />
