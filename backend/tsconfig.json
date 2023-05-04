@@ -27,6 +27,6 @@
   "include": [
     "src",
     "backend",
-    "tests"
+    "test"
   ]
 }
