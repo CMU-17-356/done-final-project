@@ -27,26 +27,39 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #8f4edb;
+    background: #2c4b82;
     padding: 0.5rem 1rem;
     border-bottom: 1px solid #333333;
+    border-radius: 20px;
 }
+
+.Title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
+}
+
 
 .Card-done {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #61ad6c;
+  background: #2c8278;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #333333;
+  border-radius: 20px;
 }
 
 .Card--text {
     width: 80%;
+    color: #fff;
 }
 
 .Card--text h1 {
-    color: #212426;
+    color: #fff;
 }
 
 .Card--button {
@@ -96,7 +109,7 @@ body {
 }
 
 .Form button {
-    background: #8f4edb;
+    background: #2c4b82;
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -105,8 +118,7 @@ body {
 }
 
 .line-through {
-    text-decoration: line-through;
-    color: #585858 !important;
+    color: #fff !important;
 }
 
 .hide-button {

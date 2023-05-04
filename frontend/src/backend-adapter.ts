@@ -84,9 +84,12 @@ export async function addUser(user) {
     }
 }
 
-export async function updateUser(user) {
-    const id = user.username
-    await instance.put("tasks/" + id, user).then((response) => response.data)
+export async function updateUser(username) {
+    const response = await instance.get("users/" + username)
+    const user = response.data[0]
+    user.history_clicks += 1
+    console.log("updated user:", user)
+    await instance.put("users/" + username, user).then((response) => response.data)
 }
 
 export async function authenticateUser(username: string, password: string) {

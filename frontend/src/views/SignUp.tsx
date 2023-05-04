@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { signup } from '../api/Login';
 import ErrorMessage from '../components/core/Error';
 import { useNavigate, Link } from 'react-router-dom'
-import {addUser, authenticateUser} from '../backend-adapter'
+import {addUser} from '../backend-adapter'
 
 const Signup = () => {
   const [username, setUsername] = useState('')
@@ -80,7 +80,7 @@ const Signup = () => {
                       { error ? <ErrorMessage message={error} /> : null }
                       <button className="btn btn-primary float-right" type="submit">Submit</button>
                     </div>
-                    { failed ? <h1 style={{ color: 'red' }}>Failed to sign up!</h1> : null }
+                    { failed ? <h5 style={{ color: 'red' }}>Failed to sign up!</h5> : null }
                   </form>
                 </div>
               </div>

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { signin, signup, userFind, checkLogin } from '../api/Login';
 import { useNavigate, useLocation, Link } from 'react-router-dom'
-import ErrorMessage from '../components/core/Error';
-import {addUser, authenticateUser} from '../backend-adapter'
+import {authenticateUser} from '../backend-adapter'
 
 const Login = ({setNavState, setUsername}) => {
   const [username, setLocalUsername] = useState('')
   const [password, setPassword] = useState('')
-  // Hold error text.
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   setNavState(false)
 
@@ -112,7 +108,7 @@ const Login = ({setNavState, setUsername}) => {
                         <Link to="/signup">Sign Up Here</Link>
                       </p>
                     </div>
-                    { error ? <h1 style={{ color: 'red' }}>Failed to login!</h1> : null }
+                    { error ? <h5 style={{ color: 'red' }}>Failed to login!</h5> : null }
                     
                   </form>
                 </div>

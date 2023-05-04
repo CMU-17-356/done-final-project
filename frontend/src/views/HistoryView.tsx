@@ -5,12 +5,14 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { getAllTasks, getTask, updateTask2, deleteTask, addTask, ITask } from '../backend-adapter'
 import Button from 'react-bootstrap/Button';
 import { CalendarView } from '../components/CalendarView';
-
+import {updateUser} from '../backend-adapter'
 
 
 export default function History({username}) {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [allTasks, setAllTasks] = useState<ITodo[]>([]);
+
+    updateUser(username)
 
     const fetchTodos = () => {
         getAllTasks(username)
