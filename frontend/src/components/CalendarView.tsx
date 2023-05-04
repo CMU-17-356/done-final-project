@@ -151,7 +151,10 @@ export const CalendarView = ({tasks}: { tasks: ITodo[] }) => {
                 }}
                 type={'month'} />
             {tasksOfDate.length > 0 && (
-                <div className={'d-flex'}>
+                // <div className={'d-flex flex-wrap'}>
+                // <div className={'card d-flex flex-wrap mt-2 me-2 col-6 col-md-4 col-lg-2 w-100 flex-fill justify-content-start' }>
+                <div className={' d-flex flex-wrap justify-content-start' }>
+                {/* <div className={'d'}> */}
                     {renderTasks()}
                 </div>
             )}
