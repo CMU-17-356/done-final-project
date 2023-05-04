@@ -2,12 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { signup } from '../api/Login';
 import ErrorMessage from '../components/core/Error';
 import { useNavigate, Link } from 'react-router-dom'
+import {addUser} from '../backend-adapter'
 
 const Signup = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [fname, setFName] = useState('')
   const [lname, setLName] = useState('')
+  const [failed, setFailed] = useState(false)
 
   // Hold error text.
   const [error, setError] = useState('');
@@ -24,7 +26,7 @@ const Signup = () => {
                 <div className="card-body">
                   <h1 style={{ color: 'blue' }}>Create an account</h1>
                   <p className="text-secondary">Get started with DONE!</p>
-                  <form onSubmit={e => {
+                  <form onSubmit={async e => {
                     e.preventDefault()
                     // signup(username, password, fname, lname)
                     //   .then((res) => {
@@ -33,10 +35,28 @@ const Signup = () => {
                     //     setError(err.message);
                     //   });
                     console.log(username, password, fname, lname);
-                    setUsername('')
-                    setPassword('')
-                    setFName('')
-                    setLName('')
+                    const user = {
+                      first_name: fname,
+                      last_name: lname,
+                      username: username,
+                      password: password
+                    }
+
+                    let result = await addUser(user)
+              
+                    if(result){
+                      console.log("success")
+                      navigate('/')
+                      setUsername('')
+                      setPassword('')
+                      setFName('')
+                      setLName('')
+                      setFailed(false)
+                    } else {
+                      console.log("failed")
+                      setFailed(true)
+                    }
+                    
                   }}
                   >
                     <div className="form-group">
@@ -60,6 +80,7 @@ const Signup = () => {
                       { error ? <ErrorMessage message={error} /> : null }
                       <button className="btn btn-primary float-right" type="submit">Submit</button>
                     </div>
+                    { failed ? <h5 style={{ color: 'red' }}>Failed to sign up!</h5> : null }
                   </form>
                 </div>
               </div>

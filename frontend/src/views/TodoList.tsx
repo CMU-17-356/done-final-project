@@ -217,7 +217,7 @@ const convertFileToBase64 = (file: File) => {
 
   return (
     <main className='TodoList'>
-      <div className="Card">
+      <div className="Title">
         <Button onClick={movePrevious}>Previous</Button>
         <h1>TODO: { weekday[date.getDay()]}, {format(date, "MMMM do")}</h1>
         <Button onClick={moveNext}>Next</Button>

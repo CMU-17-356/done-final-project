@@ -78,22 +78,26 @@ export async function addUser(user) {
     const response = await instance.get("users/" + user.username);
     if (response.data.length == 0) {
         await instance.post("users/", user) 
+        return true
     } else {
-        throw new Error("Username already exists.")
+        return false
     }
 }
 
-export async function updateUser(user) {
-    const id = user.username
-    await instance.put("tasks/" + id, user).then((response) => response.data)
+export async function updateUser(username) {
+    const response = await instance.get("users/" + username)
+    const user = response.data[0]
+    user.history_clicks += 1
+    console.log("updated user:", user)
+    await instance.put("users/" + username, user).then((response) => response.data)
 }
 
 export async function authenticateUser(username: string, password: string) {
     const response = await instance.get("users/" + username)
     if (response.data.length == 0) {
-        throw new Error("Username doesn't exist.")
+        return false
     }
-    const user = response.data
+    const user = response.data[0]
     if (user.password === password) {
         return true
     } 
